@@ -1,0 +1,43 @@
+body {
+  padding: 15px;
+}
+
+/* Main Title */
+h1 {
+  font-family: helvetica;
+  font-weight: 200;
+}
+/* Data Section Title */
+h2 {  
+  text-align: center;
+}
+/* Item Titles */
+h3 {
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* Data Boxes */
+span {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  font-weight: 200;
+}
+div.data {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+div.dataSection {
+  grid-row: 1 / span 2; 
+}
+div.data > h3 {
+  padding: 0px;
+  margin: 0px;
+}
+
+.row {
+  display: grid;
+  grid-gap: 30px;
+}
