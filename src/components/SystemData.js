@@ -26,7 +26,7 @@ const LineProperties = {
   duration: 1400,
   color: '#A6E22E',
   trailColor: '#eee',
-  trailWidth: 1,
+  trailWidth: 0.1,
   svgStyle: null,
 }
 
@@ -113,8 +113,16 @@ class SystemData extends React.Component {
     si.fsSize(function(data) {
       var elements = [];
       for (var i = 0; i < data.length; i++) {
+        var TotalMegabytes = (data[i].size/1048576).toFixed(0) + " MB";
+        var UsedMegabytes = (data[i].used/1048576).toFixed(0) + " MB";
+
         var elementID = "storage"+i;
-        var element = React.createElement('div', {id:elementID, className:"storageBar"}, data[i].fs);
+        var element = React.createElement('div', {id:elementID, className:"storageBar"}, [
+          React.createElement('span', null, data[i].fs),
+          React.createElement('code', {className:'right'}, data[i].type),
+          React.createElement('br', null, null),
+          React.createElement('code', null, (TotalMegabytes + " / " + UsedMegabytes))
+        ]);
         elements.push(element);  
       }
 
