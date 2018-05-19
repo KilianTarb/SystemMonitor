@@ -1,0 +1,74 @@
+export function getCpuStats(cpuCores) {
+  var cpuStats = [];
+  var stats1 = {};
+  var stats2 = {};
+  var cpuIndexs = [];
+
+  // First loop to get inital timings.
+  for (var i = 0; i < cpuCores.length; i++) {
+    //console.log("First Measurement : Core:"+i);
+    stats1 = getCPUdata(cpuCores[i]);
+    var currentIndex = i;
+    //console.log(stats1);
+    var startIdle = stats1.idle;
+    var startTotal = stats1.total;
+  }
+
+  // Loop to get second timings
+  setTimeout(function() {
+    for (var i = 0; i < cpuCores.length+1; i++) {
+      // Dataset Two
+      stats2 = getCPUdata(cpuCores[i]);
+      //console.log("Second Measurement : Core:"+i);
+      console.log(stats2);
+      var endIdle   = stats2.idle;
+      var endTotal  = stats2.total;
+
+      // Compare datasets
+      var idle 	= endIdle - startIdle;
+      var total = endTotal - startTotal;
+      var perc	= idle / total;
+
+      var result = {
+        coreIndex: i,
+        idleResult: idle,
+        totalResult: total,
+        percentageTotal: perc
+      };
+
+      cpuStats.push(result);
+    }
+  }, 1000/cpuCores.length);
+
+  console.log(cpuStats);
+  if (cpuStats.length == cpuCores.length) {
+    return cpuStats;
+    console.log(cpuStats);
+  } else {
+    console.log("ERROR");
+  }
+}
+
+export function getCPUdata(core) {  
+  var user  = core.times.user;
+  var nice  = core.times.nice;
+  var sys   = core.times.sys;
+  var idle  = core.times.idle;
+  var irq   = core.times.irq;
+  var total = (user + nice + sys + idle + irq);
+
+  // Returns the a cpu core's idle and total time.
+  return {
+      'idle': idle, 
+      'total': total
+  };
+}
+
+function spitCores(cpuObj) {
+  var cores = [];
+
+  for (var i = 0; i < cpuObj.length; i++) {
+    cores.push(cpuObj[i]);
+  }
+  return cores;
+}

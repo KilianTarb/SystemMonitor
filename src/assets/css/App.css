@@ -1,43 +1,67 @@
 body {
-  padding: 15px;
+  background-color: #272822;
+  color: rgb(226, 226, 226);
+  font-family: 'Courier New', Courier, monospace;
+  padding: 50px;
 }
 
-/* Main Title */
-h1 {
-  font-family: helvetica;
-  font-weight: 200;
-}
 /* Data Section Title */
 h2 {  
   text-align: center;
 }
+
 /* Item Titles */
 h3 {
+  color: #FD971F;
+  padding-top: 0px;
+  font-size: 12px;
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0px;
 }
 
 /* Data Boxes */
-span {
+table {
+  width: 75%;
+}
+td {
   font-family: 'Courier New', Courier, monospace;
   font-size: 12px;
   font-weight: 200;
+  width: 25%;
+  text-align: center;
+}
+
+
+div.dataSection {
+  grid-row: 1 / span 2; 
 }
 div.data {
   padding: 10px;
-  margin-bottom: 20px;
-}
-div.dataSection {
-  grid-row: 1 / span 2; 
+  width: 75%;
 }
 div.data > h3 {
   padding: 0px;
   margin: 0px;
 }
-
 .row {
   display: grid;
   grid-gap: 30px;
+}
+
+
+.bar {
+  width: 30%;
+  margin-left: 35%;
+  padding: 0px;
+  display: inline-table;
+}
+
+.red {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
 }
