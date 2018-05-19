@@ -62,10 +62,10 @@ div.data > h3 {
   padding: 0px;
   display: inline-table;
 }
-
-.red {
-  background-color: red;
-  width: 10px;
-  height: 10px;
-  display: inline-block;
+.storageBar {
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
+
