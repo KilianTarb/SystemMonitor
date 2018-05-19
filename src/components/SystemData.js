@@ -1,11 +1,11 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Paper from '@material-ui/core/Paper';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
 
+// Google Material-ui
+import Paper from '@material-ui/core/Paper';
+
+// Back-end
 import os from "os";
 import util from "os-utils";
 import cpuData, { getCPUdata, getCpuStats, GetPercentage } from '../lib/CpuData';
@@ -29,7 +29,6 @@ const paperStyle = {
   width: "100%"
 };
 const barStyle = {
-
 };
 
 var cpuCores = [];
@@ -45,6 +44,7 @@ class SystemData extends React.Component {
       uptime: util.sysUptime.call(), 
       totalStorage: 0,
       freeStorage: 0,
+      cpuModel: os.cpus()[0].model,
       cpuUsage: 0,
       cpuAmount: util.cpuCount.call(),
       totalMemory: util.totalmem.call(),
@@ -135,23 +135,48 @@ class SystemData extends React.Component {
           <Paper style={paperStyle} zdepth={this.state.paperDepth}>
             <div>
               <h3>CPU</h3>
-              <Grid>
-                <Row className="show-grid">
-                  <Col xs={12} md={8}>
-                    <code>&lt;{'Col xs={12} md={8}'} /&gt;</code>
-                  </Col>
-                  <Col xs={6} md={4}>
-                    <code>&lt;{'Col xs={6} md={4}'} /&gt;</code>
-                  </Col>
-                </Row>
-              </Grid>
+              <div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Model:</td>
+                      <td>{this.state.cpuModel}</td>
+                    </tr>
+                    <tr>
+                      <td>Cores:</td>
+                      <td>{this.state.cpuAmount}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h3 className="subtitle">Usage</h3>
+              <hr/>
+              <div>
+                <dir style={barStyle} className="bar" id="cpuCoreBars"></dir>
+              </div>
             </div>
           </Paper>
         </div>
         <div className="data">
           <Paper style={paperStyle} zdepth={this.state.paperDepth}>
+            <div>
+              <h3>Memory</h3>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Total:</td>
+                    <td>{this.state.totalMemory.toFixed(0)+" MB"}</td>
+                  </tr>
+                  <tr>
+                    <td>Free:</td>
+                    <td>{this.state.freemem.toFixed(0)+" MB"}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 className="subtitle">Usage</h3>
+            <hr/>
             <div style={barStyle} className="bar" id="memoryProgress"></div> 
-            <dir style={barStyle} className="bar" id="cpuCoreBars"></dir>
           </Paper>
         </div>
       </div>
