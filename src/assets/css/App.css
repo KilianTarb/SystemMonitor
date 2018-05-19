@@ -28,7 +28,8 @@ h1, h2, h3, h4 {
 
 /* Data Boxes */
 table {
-  width: 75%;
+  margin-top: 10px;
+  width: 60%;
 }
 td {
   font-family: 'Courier New', Courier, monospace;
@@ -44,7 +45,7 @@ div.dataSection {
 }
 div.data {
   padding: 10px;
-  width: 75%;
+  width: 100%;
 }
 div.data > h3 {
   padding: 0px;
