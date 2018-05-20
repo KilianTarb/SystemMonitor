@@ -45,6 +45,11 @@ const lineStyle = {
 };
 
 var cpuCores = [];
+var cores = [];
+var cpuStats = {
+  overallUsage: 0,
+  averageSpeed: 0
+};
 var storageBars = [];
 class SystemData extends React.Component {
   constructor(props) {
@@ -75,6 +80,7 @@ class SystemData extends React.Component {
     var memoryBar = new ProgressBar.Circle("#memoryProgress", BarProperties);
 
     this.cpuBarInit.call();
+    this.cpuCoreInit.call();
     this.storageBarInit.call();
 
     this.timerID = setInterval(
@@ -106,6 +112,28 @@ class SystemData extends React.Component {
         cpuCores[i].setText((v*100).toFixed(0)+"%");
       }
     }); 
+  }
+
+  cpuCoreInit() {
+    var elements = [];
+    for (var i = 0; i < 4; i++) {
+      var element = React.createElement('div', {className:'cpuCoreDisplay'}, [
+        React.createElement('span', {className:'indicator'}, null),
+        React.createElement('code', {className:'indicatorData'+i}, 'Core: '+(i+1)),
+        React.createElement('br', null, null) 
+      ]);
+      elements.push(element);
+    }
+    ReactDOM.render(elements, document.getElementById('cores'));
+  }
+  cpuCoreUpdate() {
+    si.cpuTemperature(function(data) {
+      console.log(data);
+      for (var i = 0; i < data.cores.length; i++) {
+        
+        document.getElementsByClassName('indicatorData'+i).innerHTML('hhh');
+      }
+    })
   }
 
   // Creates the progress bars
@@ -156,7 +184,8 @@ class SystemData extends React.Component {
     memBar.setText(((this.state.freememPer)*100).toFixed(0)+'%');
 
     // Update CPU Bars
-    this.updateCpuBars(this);
+    this.updateCpuBars(this); 
+    this.cpuCoreUpdate(this);
 
     // Update Storage Bar
     this.updateStorageBars(this);
@@ -220,7 +249,10 @@ class SystemData extends React.Component {
               <h3 className="subtitle">Usage</h3>
               <hr/>
               <div>
-                <dir style={barStyle} className="bar" id="cpuCoreBars"></dir>
+                <div id="cores">
+                  
+                </div>
+                <div style={barStyle} className="bar" id="cpuCoreBars"></div>
               </div>
             </div>
           </Paper>
@@ -242,7 +274,7 @@ class SystemData extends React.Component {
                 </tbody>
               </table>
             </div>
-            <h3 className="subtitle">Usage</h3>
+            <h3 className="subtitle">Free Memory</h3>
             <hr/>
             <div style={barStyle} className="bar" id="memoryProgress"></div> 
           </Paper>

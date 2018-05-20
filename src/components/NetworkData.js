@@ -46,7 +46,7 @@ class NetworkData extends React.Component {
         alignToBottom: false
       },
       from: {color: '#A6E22E'},
-      to: {color: '#ED6A5A'},
+      to: {color: '#D81E5B'},
       // Set default step function for all animate calls
       step: (state, bar) => {
         bar.path.setAttribute('stroke', state.color);

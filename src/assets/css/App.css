@@ -40,14 +40,14 @@ td {
 }
 
 
-div.dataSection {
+.dataSection {
   grid-row: 1 / span 2; 
 }
-div.data {
+.data {
   padding: 10px;
   width: 100%;
 }
-div.data > h3 {
+.data > h3 {
   padding: 0px;
   margin: 0px;
 }
@@ -72,4 +72,53 @@ div.data > h3 {
 .right {
   text-align: right;
   float: right; 
+}
+.cpuCoreDisplay {
+  display: inline;
+  margin: 5px;
+  padding: 0;
+  vertical-align: top;
+}
+
+@keyframes redPulse {
+  from { background-color: #bc330d; box-shadow: 0 0 9px #333; }
+  50% { background-color: #e33100; box-shadow: 0 0 18px #e33100; }
+  to { background-color: #bc330d; box-shadow: 0 0 9px #333; }
+}
+@-webkit-keyframes redPulse {
+  from { background-color: #bc330d; box-shadow: 0 0 9px #333; }
+  50% { background-color: #e33100; box-shadow: 0 0 18px #e33100; }
+  to { background-color: #bc330d; box-shadow: 0 0 9px #333; }
+}
+@keyframes greenPulse {
+  from { background-color: #A6E22E; box-shadow: 0 0 9px #333; }
+  50% { background-color: rgb(152, 214, 29); box-shadow: 0 0 18px rgb(116, 158, 32); }
+  to { background-color: #A6E22E; box-shadow: 0 0 9px #333; }
+}
+@-webkit-keyframes greenPulse {
+  from { background-color: #A6E22E; box-shadow: 0 0 9px #333; }
+  50% { background-color: rgb(116, 158, 32); box-shadow: 0 0 18px rgb(116, 158, 32); }
+  to { background-color: #A6E22E; box-shadow: 0 0 9px #333; }
+}
+.indicator {
+  width: 10px;
+  height: 30px;
+  margin-right: 8px;
+  display: inline-block;
+  background-color: red;
+
+  -webkit-animation-name: greenPulse;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+
+  animation-name: greenPulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+.indicatorData {
+  vertical-align: top;
+}
+#cores {
+  position: absolute;
+  display: inline-block;
 }
