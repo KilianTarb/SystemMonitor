@@ -14,6 +14,7 @@ const paperStyle = {
 	width: "100%"
 };
 
+var bar = null;
 class MemoryData extends React.Component {
 	constructor(props) {
 		super(props);
@@ -25,12 +26,31 @@ class MemoryData extends React.Component {
 
 	componentDidMount() {
 		this.memoryBarInit();
+
+		this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
 	}
+
 	componentWillUnmount() {
-  }
+		clearInterval(this.timerID);
+	}
+	
+	tick() {
+		this.updateTotalUsage();
+	}
+
 
 	memoryBarInit() {
-		var bar = new ProgressBar.Circle('#memoryProgress', BarProperties());
+		bar = new ProgressBar.Circle('#memoryProgress', BarProperties());
+	}
+
+	updateTotalUsage() {
+		var usage = util.totalmem() - util.freemem();
+		var perc = ((usage / util.totalmem())*100);
+		bar.setText((perc.toFixed(0))+"%");
+		bar.animate(perc/100);
 	}
 
 	render() {
@@ -52,7 +72,7 @@ class MemoryData extends React.Component {
 							</tbody>
 						</table>
 					</div>
-					<h3 className="subtitle">Free Memory</h3>
+					<h3 className="subtitle">Usage</h3>
 					<hr/>
 					<div className="bar" id="memoryProgress"></div> 
 				</Paper>

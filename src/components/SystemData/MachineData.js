@@ -12,45 +12,61 @@ const paperStyle = {
   };
 
 class MachineData extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            hostname: os.hostname.call(),
-            platform: os.platform.call(),
-            arch: os.arch.call(),
-            uptime: util.sysUptime.call()
-        }
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			hostname: os.hostname(),
+			platform: os.platform(),
+			arch: os.arch(),
+			uptime: util.sysUptime()
+		}
+	}
 
-    render() {
-        return(
-            <div className="data">
-                <Paper style={paperStyle} zdepth={this.state.paperDepth}>
-                    <h3>System Data</h3>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>Name:</td>
-                            <td>{this.state.hostname}</td>
-                        </tr>
-                        <tr>
-                            <td>Platform:</td>
-                            <td>{this.state.platform}</td>
-                        </tr>
-                        <tr>
-                            <td>Arch:</td>
-                            <td>{this.state.arch}</td>
-                        </tr>
-                        <tr>
-                            <td>Uptime:</td>
-                            <td>{this.state.uptime}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </Paper>
-            </div>
-        );
-    }
+	componentDidMount() {
+		this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+	}
+	componentWillUnmount() { 
+		clearInterval(this.timerID);
+	}
+	
+	tick() {
+		this.setState({
+			uptime: util.sysUptime()
+		})
+	}
+
+	render() {
+		return(
+			<div className="data">
+				<Paper style={paperStyle} zdepth={this.state.paperDepth}>
+					<h3>System Data</h3>
+					<table>
+						<tbody>
+							<tr>
+								<td>Name:</td>
+								<td>{this.state.hostname}</td>
+							</tr>
+							<tr>
+								<td>Platform:</td>
+								<td>{this.state.platform}</td>
+							</tr>
+							<tr>
+								<td>Arch:</td>
+								<td>{this.state.arch}</td>
+							</tr>
+							<tr>
+								<td>Uptime:</td>
+								<td>{this.state.uptime}</td>
+							</tr>
+						</tbody>
+					</table>
+				</Paper>
+			</div>
+		);
+	}
 }
 
 export default MachineData;

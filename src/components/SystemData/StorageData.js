@@ -14,23 +14,29 @@ const paperStyle = {
 	width: "100%"
 };
 
+var bars = [];
+var sizeText = [];
 class StorageData extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			hostname: os.hostname.call(),
-			platform: os.platform.call(),
-			arch: os.arch.call(),
-			uptime: util.sysUptime.call()
-		}
 	}
 
 	componentDidMount() {
 		this.storageBarInit();
-	}
-	componentWillUnmount() {
 
-  }
+		this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.timerID);
+	}
+	
+	tick() {
+		this.updateStorageBar();
+	}
 
 	storageBarInit() {
     si.fsSize(function(data) {
@@ -54,10 +60,20 @@ class StorageData extends React.Component {
       for (var i = 0; i < data.length; i++) {
         var bar = new ProgressBar.Line('#storage'+i, LineProperties());
         bar.animate(data[i].use / 100);
-        bar.setText(data[i].use.toFixed(1)+"%");
+				bar.setText(data[i].use.toFixed(1)+"%");
+				bars.push(bar);
       }
     });
-  }
+	}
+	
+	updateStorageBar() {
+		si.fsSize(function(data) {
+			for (var i = 0; i < bars.length; i++) {
+				bars[i].animate(data[i].use/100);
+				bars[i].setText(data[i].use.toFixed(1)+"%");
+			}
+		});
+	}
 
 	render() {
 		return(

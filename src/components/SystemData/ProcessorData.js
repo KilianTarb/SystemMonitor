@@ -13,13 +13,14 @@ const paperStyle = {
 	background: "#272822",
 	width: "100%"
 };
-var cpuCores = [];
 var cores = [];
 var cpuStats = {
   overallUsage: 0,
   averageSpeed: 0
 };
 
+var cpuBar = null;
+var clockBar = null;
 class ProcessorData extends React.Component {
 	constructor(props) {
 		super(props);
@@ -33,20 +34,25 @@ class ProcessorData extends React.Component {
 	componentDidMount() {
 		this.cpuBarInit();
 		this.cpuCoreInit();
+		this.clockSpeedInit();
+
+		this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
 	}
 	componentWillUnmount() {
-
-  }
+		clearInterval(this.timerID);
+	}
+	
+	tick() {
+		this.updateCpuBars();
+		this.updateClockSpeed();
+	}
 
 	// Renders CPU progress bars
 	cpuBarInit() {
-		var cpu = os.cpus();
-		for (var i = 0; i < 1; i++) {
-			var props = {className: 'cpuCore'+i};
-			var barElement = React.createElement('div', props, null);
-			var bar = new ProgressBar.Circle("#cpuCoreBars", BarProperties());
-			cpuCores.push(bar);
-		}
+		cpuBar = new ProgressBar.Circle("#cpuCoreBars", BarProperties());
 	}
 
 	clockSpeedInit() {
@@ -55,19 +61,14 @@ class ProcessorData extends React.Component {
 	
 	updateCpuBars() {
 		util.cpuUsage(function(v) {
-			// Will soon add a bar foreach core in the CPU
-			for (var i = 0; i < cpuCores.length; i++) {
-				cpuCores[i].animate(v);
-				cpuCores[i].setText((v*100).toFixed(0)+"%");
-			}
+			cpuBar.animate(v);
+			cpuBar.setText((v*100).toFixed(0)+"%");
 		}); 
-		this.updateClockSpeed();
 	}
 
 	updateClockSpeed() {
 		si.cpuCurrentspeed(function(data) {
 			cpuStats.averageSpeed = data.avg;
-			console.log(data);
 			clockBar.animate(data.avg/data.max);
 			clockBar.setText(data.avg+"GHz");
 		});
