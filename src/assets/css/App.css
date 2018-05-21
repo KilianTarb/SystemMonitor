@@ -61,7 +61,7 @@ td {
   width: 20%;
   margin-left: 40%;
   padding: 0px;
-  display: inline-table;
+  display: inline-block;
 }
 .storageBar {
   margin-top: 20px;

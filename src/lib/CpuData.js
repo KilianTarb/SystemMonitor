@@ -4,9 +4,8 @@
 */
 import os from "os";
 import util from "os-utils";
+import si from 'systeminformation';
 
-export function GetPercentage() {
-  util.cpuUsage(function(v) {
-    return v;
-  });
-}
+si.cpuTemperature(function(data) {
+
+});
