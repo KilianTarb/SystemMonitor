@@ -2,7 +2,7 @@ body {
   background-color: #272822;
   color: rgb(226, 226, 226);
   font-family: 'Courier New', Courier, monospace;
-  padding: 50px;
+  padding-right: 60px;
 }
 
 /* Data Section Title */
@@ -41,7 +41,7 @@ td {
 
 
 .dataSection {
-  grid-row: 1 / span 2; 
+  grid-row: 2; 
 }
 .data {
   padding: 10px;
