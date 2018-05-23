@@ -5,6 +5,7 @@ import util from 'os-utils';
 import si from 'systeminformation';
 import Paper from '@material-ui/core/Paper';
 import ProgressProperties, { LineProperties, BarProperties } from '../../data/ProgresProperties';
+import Indicator from '../Indicators/Square';
 
 const ProgressBar = require('progressbar.js');
 const paperStyle = {
@@ -21,13 +22,16 @@ var cpuStats = {
 
 var cpuBar = null;
 var clockBar = null;
+var coreTempreatures = [];
 class ProcessorData extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			cpuModel: os.cpus()[0].model,
       cpuUsage: 0,
-      cpuAmount: util.cpuCount.call()
+			cpuAmount: util.cpuCount.call(),
+			cpuTemps: []
 		}
 	}
 
@@ -48,6 +52,7 @@ class ProcessorData extends React.Component {
 	tick() {
 		this.updateCpuBars();
 		this.updateClockSpeed();
+		this.cpuCoreUpdate();
 	}
 
 	// Renders CPU progress bars
@@ -75,24 +80,28 @@ class ProcessorData extends React.Component {
 	}
 	
 	cpuCoreInit() {
+		var temps = [];
+		// Get inital tempreatures
+		si.cpuTemperature().then(data => {
+			this.state.cpuTemps = data.cores;
+			this.renderIndicators();
+		});	
+	}
+
+	renderIndicators() {
+		// Create elements
 		var elements = [];
-		for (var i = 0; i < 4; i++) {
-			var element = React.createElement('div', {className:'cpuCoreDisplay'}, [
-				React.createElement('span', {className:'indicator'}, null),
-				React.createElement('code', {className:'indicatorData'+i}, 'Core: '+(i+1)),
-				React.createElement('br', null, null) 
-			]);
+		for (var i = 0; i < this.state.cpuTemps.length; i++) {
+			var element = <Indicator text={this.state.cpuTemps[i]}/>;
 			elements.push(element);
 		}
 		ReactDOM.render(elements, document.getElementById('cores'));
 	}
 
 	cpuCoreUpdate() {
-		si.cpuTemperature(function(data) {
-			for (var i = 0; i < data.cores.length; i++) {        
-				document.getElementsByClassName('indicatorData'+i).innerHTML('hhh');
-			}
-		})
+		si.cpuTemperature().then(data => {
+			this.state.cpuTemps = data.cores;
+		});
 	}
 
 	render() {
