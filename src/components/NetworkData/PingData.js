@@ -47,7 +47,7 @@ class PingData extends React.Component {
 
 	ping() {
     si.inetChecksite(this.state.pingUrl, function(data) {
-      pingBar.animate(data.ms/1000);
+      pingBar.animate(data.ms/2000);
       pingBar.setText(data.ms);
       pingCode = data.status;
     });
