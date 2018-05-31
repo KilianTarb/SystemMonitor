@@ -5,20 +5,25 @@ import React, { Component } from 'react';
 import SystemData from './SystemData';
 import NetworkData from './NetworkData';
 
+import Interface from './NetworkData/InterfaceData';
+import Ping from './NetworkData/PingData';
+import Machine from './SystemData/MachineData';
+import Memory from './SystemData/MemoryData';
+import Processor from './SystemData/ProcessorData';
+import Storage from './SystemData/StorageData';
+
 class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="dataSection">
-            <h2>System</h2>
-            <SystemData/>
-          </div>
-          <div className="dataSection">
-            <h2>Network</h2>
-            <NetworkData/>
-          </div>
-        </div>
+        <div className="debug">1</div>
+        <div className="debug">2</div>
+        <Machine/>
+        <Interface/>
+        <Storage/>
+        <Ping/>
+        <Memory/>
+        <Processor/>
       </div>
     );
   }

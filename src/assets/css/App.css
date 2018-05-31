@@ -2,7 +2,6 @@ body {
   background-color: #272822;
   color: rgb(226, 226, 226);
   font-family: 'Courier New', Courier, monospace;
-  padding-right: 60px;
 }
 
 /* Data Section Title */
@@ -35,25 +34,39 @@ td {
   font-family: 'Courier New', Courier, monospace;
   font-size: 12px;
   font-weight: 200;
-  
   text-align: left;
 }
 
 
-.dataSection {
-  grid-row: 2; 
+
+
+.container {
+ display: grid;
+ grid-template-columns: auto auto;
+ padding: 10px;
+ grid-gap: 10px;
 }
 .data {
-  padding: 10px;
-  width: 100%;
+  padding: 20px;
+  border: 1px;
+  border-color: #333;
+  border-style: solid;
+
 }
 .data > h3 {
   padding: 0px;
   margin: 0px;
 }
-.row {
-  display: grid;
-  grid-gap: 30px;
+
+
+
+.debug {
+  text-align: center;
+  color: aqua;
+  background-color: #333;
+  border: 1px;
+  border-color: #bc330d;
+  border-style: solid;
 }
 
 
@@ -61,8 +74,19 @@ td {
   width: 20%;
   margin-left: 40%;
   padding: 0px;
-  display: inline-block;
 }
+.barInline {
+  margin: 10px;
+  width: 15%;
+  position: relative;
+  display: block;
+}
+
+.row {
+  display: flex;
+}
+
+
 .storageBar {
   margin-top: 20px;
   margin-left: 10px;
@@ -73,12 +97,19 @@ td {
   text-align: right;
   float: right; 
 }
+.coreIndicator {
+  width: 20%;
+  position: absolute;
+  margin: 0;
+}
+/*
 .cpuCoreDisplay {
   display: inline;
   margin: 5px;
   padding: 0;
   vertical-align: top;
 }
+*/
 
 @keyframes redPulse {
   from { background-color: #bc330d; box-shadow: 0 0 9px #333; }

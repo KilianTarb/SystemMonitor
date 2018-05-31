@@ -40,12 +40,10 @@ class InterfaceData extends React.Component {
 	render() {
 		return(
 			<div className="data">
-				<Paper style={paperStyle}>
-						<h3>Network Interfaces</h3>
-						<table>
-							<tbody id="nics"></tbody>
-						</table>
-				</Paper>
+				<h3>Network Interfaces</h3>
+				<table>
+					<tbody id="nics"></tbody>
+				</table>
 			</div>
 		);
 	}

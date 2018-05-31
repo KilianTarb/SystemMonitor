@@ -56,24 +56,22 @@ class PingData extends React.Component {
 	render() {
 		return(
 			<div className="data">
-				<Paper style={paperStyle}>
-					<h3>Speed</h3>
-					<table>
-						<tbody>
-							<tr>
-								<td>Host:</td>
-								<td>{this.state.pingUrl}</td>
-							</tr>
-							<tr>
-								<td>Status Code:</td>
-								<td>{this.state.currentPingCode}</td>
-							</tr>
-						</tbody>
-					</table>
-					<hr/>
-					<div id="pingBar" className="bar">
-					</div>
-				</Paper>
+				<h3>Speed</h3>
+				<table>
+					<tbody>
+						<tr>
+							<td>Host:</td>
+							<td>{this.state.pingUrl}</td>
+						</tr>
+						<tr>
+							<td>Status Code:</td>
+							<td>{this.state.currentPingCode}</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr/>
+				<div id="pingBar" className="bar">
+				</div>
 			</div>
 		);
 	}

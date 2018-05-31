@@ -78,10 +78,8 @@ class StorageData extends React.Component {
 	render() {
 		return(
 			<div className="data">
-				<Paper style={paperStyle}>
-					<h3>Storage</h3>
-					<div id="storageProgress"></div> 
-				</Paper>
+				<h3>Storage</h3>
+				<div id="storageProgress"></div> 
 			</div>
 		);
 	}

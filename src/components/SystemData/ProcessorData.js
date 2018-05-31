@@ -4,7 +4,7 @@ import os from 'os';
 import util from 'os-utils';
 import si from 'systeminformation';
 import Paper from '@material-ui/core/Paper';
-import ProgressProperties, { LineProperties, BarProperties } from '../../data/ProgresProperties';
+import ProgressProperties, { LineProperties, BarProperties, SemiProperties } from '../../data/ProgresProperties';
 import Indicator from '../Indicators/Square';
 
 const ProgressBar = require('progressbar.js');
@@ -22,7 +22,10 @@ var cpuStats = {
 
 var cpuBar = null;
 var clockBar = null;
+
 var coreTempreatures = [];
+var tempIndicators = [];
+
 class ProcessorData extends React.Component {
 	constructor(props) {
 		super(props);
@@ -80,7 +83,6 @@ class ProcessorData extends React.Component {
 	}
 	
 	cpuCoreInit() {
-		var temps = [];
 		// Get inital tempreatures
 		si.cpuTemperature().then(data => {
 			this.state.cpuTemps = data.cores;
@@ -89,60 +91,60 @@ class ProcessorData extends React.Component {
 	}
 
 	renderIndicators() {
-		// Create elements
-		var elements = [];
+		var divs = [];
 		for (var i = 0; i < this.state.cpuTemps.length; i++) {
-			var element = <Indicator text={this.state.cpuTemps[i]}/>;
-			elements.push(element);
+			var divId = "core"+i;
+			var div = React.createElement('div', {id: divId, className: "bar"}, null);
+			divs.push(div);
 		}
-		ReactDOM.render(elements, document.getElementById('cores'));
+
+		ReactDOM.render(divs, document.getElementById('cores'));
+
+		for (var i = 0; i < this.state.cpuTemps.length; i++) {
+			// Create Bar
+			var tempBar = new ProgressBar.SemiCircle('#core'+i, LineProperties());
+			tempBar.animate(this.state.cpuTemps[i] / 1000);
+			tempBar.setText(this.state.cpuTemps[i]);
+			tempIndicators.push(tempBar);
+		}
 	}
 
 	cpuCoreUpdate() {
 		si.cpuTemperature().then(data => {
 			this.state.cpuTemps = data.cores;
+			for (var i = 0; i < tempIndicators.length; i++) {
+				tempIndicators[i].animate(this.state.cpuAmount[i]/1000);
+				tempIndicators[i].setText(this.state.cpuTemps[i]);
+			}
 		});
 	}
 
 	render() {
 		return(
 			<div className="data">
-				<Paper style={paperStyle} zdepth={this.state.paperDepth}>
+				<div>
+					<h3>CPU</h3>
 					<div>
-						<h3>CPU</h3>
-						<div>
-							<table>
-								<tbody>
-									<tr>
-										<td>Model:</td>
-										<td>{this.state.cpuModel}</td>
-									</tr>
-									<tr>
-										<td>Cores:</td>
-										<td>{this.state.cpuAmount}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<h3 className="subtitle">Usage</h3>
-						<hr/>
-						<div>
-							<table>
-								<tbody>
-									<tr>
-									<td><div id="cores"></div></td>
-									</tr>
-									<tr>
-									<td><div className="bar" id="cpuCoreBars"></div></td>
-									</tr>
-									<tr>
-									<td><div className="bar" id="cpuClockBar"></div></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<table>
+							<tbody>
+								<tr>
+									<td>Model:</td>
+									<td>{this.state.cpuModel}</td>
+								</tr>
+								<tr>
+									<td>Cores:</td>
+									<td>{this.state.cpuAmount}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-				</Paper>
+					<h3 className="subtitle">Usage</h3>
+					<hr/>
+					<div className="row">
+						<div className="barInline" id="cpuCoreBars"></div>
+						<div className="barInline" id="cpuClockBar"></div>
+					</div>
+				</div>
 			</div>
 		);
 	}

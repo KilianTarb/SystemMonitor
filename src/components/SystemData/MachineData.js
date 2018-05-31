@@ -41,29 +41,27 @@ class MachineData extends React.Component {
 	render() {
 		return(
 			<div className="data">
-				<Paper style={paperStyle} zdepth={this.state.paperDepth}>
-					<h3>System Data</h3>
-					<table>
-						<tbody>
-							<tr>
-								<td>Name:</td>
-								<td>{this.state.hostname}</td>
-							</tr>
-							<tr>
-								<td>Platform:</td>
-								<td>{this.state.platform}</td>
-							</tr>
-							<tr>
-								<td>Arch:</td>
-								<td>{this.state.arch}</td>
-							</tr>
-							<tr>
-								<td>Uptime:</td>
-								<td>{this.state.uptime}</td>
-							</tr>
-						</tbody>
-					</table>
-				</Paper>
+				<h3>System Data</h3>
+				<table>
+					<tbody>
+						<tr>
+							<td>Name:</td>
+							<td>{this.state.hostname}</td>
+						</tr>
+						<tr>
+							<td>Platform:</td>
+							<td>{this.state.platform}</td>
+						</tr>
+						<tr>
+							<td>Arch:</td>
+							<td>{this.state.arch}</td>
+						</tr>
+						<tr>
+							<td>Uptime:</td>
+							<td>{this.state.uptime}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		);
 	}

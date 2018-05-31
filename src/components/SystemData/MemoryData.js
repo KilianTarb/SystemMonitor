@@ -56,26 +56,24 @@ class MemoryData extends React.Component {
 	render() {
 		return(
 			<div className="data">
-				<Paper style={paperStyle}>
-					<div>
-						<h3>Memory</h3>
-						<table>
-							<tbody>
-								<tr>
-									<td>Total:</td>
-									<td>{this.state.totalMemory.toFixed(0)+" MB"}</td>
-								</tr>
-								<tr>
-									<td>Free:</td>
-									<td>{this.state.freemem.toFixed(0)+" MB"}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<h3 className="subtitle">Usage</h3>
-					<hr/>
-					<div className="bar" id="memoryProgress"></div> 
-				</Paper>
+				<div>
+					<h3>Memory</h3>
+					<table>
+						<tbody>
+							<tr>
+								<td>Total:</td>
+								<td>{this.state.totalMemory.toFixed(0)+" MB"}</td>
+							</tr>
+							<tr>
+								<td>Free:</td>
+								<td>{this.state.freemem.toFixed(0)+" MB"}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<h3 className="subtitle">Usage</h3>
+				<hr/>
+				<div className="bar" id="memoryProgress"></div> 
 			</div>
 		);
 	}
