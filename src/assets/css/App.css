@@ -38,7 +38,14 @@ td {
 }
 
 
-
+.sideData {
+  float: left;
+}
+.sideChart {
+  float: right;
+  width: 40%;
+  height: 200px;
+}
 
 .container {
  display: grid;
