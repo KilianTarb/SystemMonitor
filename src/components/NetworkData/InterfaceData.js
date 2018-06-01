@@ -105,10 +105,11 @@ class InterfaceData extends React.Component {
 		}
 		return(
 			<div className="data">
-				<h3>Network Interfaces</h3>
+				<h3>Current Network Speed</h3>
 				<table className="">
 					<tbody id="nics"></tbody>
 				</table>
+				<hr/>
 				<div className="">
 					<Line ref={(chart)=>{this._chart=chart}} data={data} options={options} />
 				</div>

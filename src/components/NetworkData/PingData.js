@@ -56,7 +56,7 @@ class PingData extends React.Component {
 	render() {
 		return(
 			<div className="data">
-				<h3>Speed</h3>
+				<h3>Current Round Trip Time</h3>
 				<table>
 					<tbody>
 						<tr>

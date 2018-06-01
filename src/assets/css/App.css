@@ -49,7 +49,7 @@ td {
 
 .container {
  display: grid;
- grid-template-columns: auto auto;
+ grid-template-columns: 50% 49%;
  padding: 10px;
  grid-gap: 10px;
 }
