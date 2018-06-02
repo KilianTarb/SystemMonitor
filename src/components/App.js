@@ -18,10 +18,10 @@ class App extends React.Component {
       <div className="container">
         <div className="debug">1</div>
         <div className="debug">2</div>
-        <Machine/>
+        <Ping/>
         <Interface/>
         <Storage/>
-        <Ping/>
+        <Machine/>
         <Memory/>
         <Processor/>
       </div>
