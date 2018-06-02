@@ -6,6 +6,8 @@ import si from 'systeminformation';
 import Paper from '@material-ui/core/Paper';
 import ProgressProperties, { LineProperties, BarProperties, SemiProperties } from '../../data/ProgresProperties';
 import Indicator from '../Indicators/Square';
+import {Line} from 'react-chartjs-2';
+
 
 const ProgressBar = require('progressbar.js');
 const paperStyle = {
@@ -26,6 +28,8 @@ var clockBar = null;
 var coreTempreatures = [];
 var tempIndicators = [];
 
+var chartSets = [];
+
 class ProcessorData extends React.Component {
 	constructor(props) {
 		super(props);
@@ -42,6 +46,7 @@ class ProcessorData extends React.Component {
 		this.cpuBarInit();
 		this.cpuCoreInit();
 		this.clockSpeedInit();
+		this.generateDatasets();
 
 		this.timerID = setInterval(
       () => this.tick(),
@@ -56,6 +61,7 @@ class ProcessorData extends React.Component {
 		this.updateCpuBars();
 		this.updateClockSpeed();
 		this.cpuCoreUpdate();
+		this.updateChart();
 	}
 
 	// Renders CPU progress bars
@@ -119,7 +125,54 @@ class ProcessorData extends React.Component {
 		});
 	}
 
+	generateDatasets() {
+		var sets = [];
+		// Get the CPU loads
+		si.currentLoad().then(data => {
+			for (var i = 0; i < data.cpus.length; i++) {
+				var newSet = {
+					label: "CPU"+(i+1),
+					data: [],
+					backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+					borderColor: ['rgba(255,99,132,1)'],
+					borderWidth: 1,
+					pointStyle: 'line'
+				}
+				chartSets.push(newSet);
+			}
+		});
+		this._chart.chartInstance.update();
+		console.log("Datasets Generated");
+		console.log(chartSets);
+	}
+
+	updateChart() {
+		si.currentLoad().then(data => {
+			for (var i = 0; i < data.cpus.length; i++) {
+				if (chartSets[0].data.length == 21) {
+					chartSets[i].data.shift();
+				}
+				chartSets[i].data.push(data.cpus[i].load);
+				this._chart.chartInstance.update();
+			}
+		});
+	}
+
 	render() {
+		
+		var data = {
+			labels: [
+				"1s", "2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", 
+				"11s", "12s", "13s", "14s", "15s", "16s", "17s", "18s", "19s", "20s"
+			],
+			datasets: chartSets,				
+		}
+
+		var options = {
+			maintainAspectRatio: false,
+			responsive: true
+		}
+
 		return(
 			<div className="data">
 				<div>
@@ -144,6 +197,9 @@ class ProcessorData extends React.Component {
 						<div className="barInline" id="cpuCoreBars"></div>
 						<div className="barInline" id="cpuClockBar"></div>
 					</div>
+				</div>
+				<div>
+				<Line ref={(chart)=>{this._chart=chart}} data={data} options={options} />
 				</div>
 			</div>
 		);
