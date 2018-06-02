@@ -37,6 +37,23 @@ td {
   text-align: left;
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+}
+.footer > p {
+  display: inline;
+}
+.footerRight {
+  float: right;
+}
+.footerLeft {
+  float: left;
+}
 
 .sideData {
   float: left;
