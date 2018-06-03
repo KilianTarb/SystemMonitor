@@ -96,8 +96,8 @@ class PingData extends React.Component {
 					</tbody>
 				</table>
 				<hr/>
-				<div id="pingBar" className="bar"></div>
-				<div>
+				<div id="pingBar" className="barInline sideData"></div>
+				<div className="sideChart">
 					<Line ref={(chart)=>{this._chart=chart}} data={data} options={options} />
 				</div>
 			</div>
